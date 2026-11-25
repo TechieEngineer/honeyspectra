@@ -1,0 +1,49 @@
+services:
+  engine:
+    build:
+      context: .
+      target: engine
+    network_mode: none
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    cpus: 0.5
+    mem_limit: 128m
+    pids_limit: 64
+    volumes:
+      - telemetry:/app/data
+  dashboard:
+    build:
+      context: .
+      target: dashboard
+    ports:
+      - "127.0.0.1:8000:8000"
+    networks: [lab]
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    cpus: 1.0
+    mem_limit: 384m
+    pids_limit: 64
+    volumes:
+      - telemetry:/app/data:ro
+  demo:
+    profiles: [demo]
+    build:
+      context: .
+      target: dashboard
+    command: ["python", "simulator.py", "--count", "100", "--interval", "0.25"]
+    network_mode: none
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    cpus: 0.5
+    mem_limit: 96m
+    pids_limit: 32
+    volumes:
+      - telemetry:/app/data
+networks:
+  lab:
+    internal: true
+volumes:
+  telemetry:

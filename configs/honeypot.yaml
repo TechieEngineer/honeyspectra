@@ -1,0 +1,13 @@
+{
+  "log_path": "data/engine.jsonl",
+  "queue_size": 1024,
+  "max_connections": 64,
+  "protocols": [
+    {"name":"ssh", "enabled":true, "port":2222},
+    {"name":"http", "enabled":true, "port":8081},
+    {"name":"telnet", "enabled":true, "port":2323},
+    {"name":"ftp", "enabled":true, "port":2121},
+    {"name":"mysql", "enabled":true, "port":3307},
+    {"name":"tcp", "enabled":true, "port":9091}
+  ]
+}
